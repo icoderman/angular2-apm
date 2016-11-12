@@ -1,0 +1,12 @@
+# Mac OS
+.DS_Store
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+dist
+jspm_packages
+typings
+node_modules
