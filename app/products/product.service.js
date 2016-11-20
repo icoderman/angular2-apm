@@ -9,35 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var http_1 = require('@angular/http');
+var Observable_1 = require('rxjs/Observable');
+require('rxjs/add/operator/map');
+require('rxjs/add/operator/do');
+require('rxjs/add/operator/catch');
 var ProductService = (function () {
-    function ProductService() {
+    function ProductService(_http) {
+        this._http = _http;
+        this._productUrl = 'api/products/products.json';
     }
     ProductService.prototype.getProducts = function () {
-        return [{
-                "productId": 8,
-                "productName": "Saw",
-                "productCode": "TBX-0022",
-                "releaseDate": "May 15, 2016",
-                "description": "15-inch steel blade hand saw",
-                "price": 11.55,
-                "starRating": 3.7,
-                "imageUrl": "http://openclipart.org/image/300px/svg_to_png/27070/egore911_saw.png"
-            },
-            {
-                "productId": 10,
-                "productName": "Video Game Controller",
-                "productCode": "GMG-0042",
-                "releaseDate": "October 15, 2015",
-                "description": "Standard two-button video game controller",
-                "price": 35.95,
-                "starRating": 4.6,
-                "imageUrl": "http://openclipart.org/image/300px/svg_to_png/120337/xbox-controller_01.png"
-            }
-        ];
+        return this._http.get(this._productUrl)
+            .map(function (response) { return response.json(); })
+            .do(function (data) { return console.log('All: ' + JSON.stringify(data)); })
+            .catch(this.handleError);
+    };
+    ProductService.prototype.handleError = function (error) {
+        console.error(error);
+        return Observable_1.Observable.throw(error.json().error || 'Server error');
     };
     ProductService = __decorate([
         core_1.Injectable(), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [http_1.Http])
     ], ProductService);
     return ProductService;
 }());
