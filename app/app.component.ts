@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 
-import { ProductService } from './products/product.service';
-
 @Component({
     selector: 'pm-app',
     template: `
@@ -19,8 +17,7 @@ import { ProductService } from './products/product.service';
         <div class='container'>
             <router-outlet></router-outlet>
         </div>
-    `,
-    providers: [ ProductService ]
+    `
 })
 export class AppComponent {
     pageTitle: string = `Acme Product Management`;
